@@ -14,6 +14,35 @@ const isAuth = require('../middlewares/isAuth')({
   logger
 })
 
-router.post('/', isAuth, handleErrorAsync(uploadController.postUploadImage))
+router.post('/', isAuth, handleErrorAsync(uploadController.postUploadImage)
+  // #swagger.description = '上傳圖片至 Cloudinary'
+
+  /**
+   * #swagger.security = [{ "apiKeyAuth": [] }]
+
+   * #swagger.parameters['file'] = {
+      in: 'formData',
+      type: 'file',
+      required: true,
+      description: '上傳的圖片檔案',
+    }
+  
+   * #swagger.responses[200] = {
+      schema: {
+        "status" : "success",
+        "data": {
+          "image_url": "https://..."
+        }
+      }
+    } 
+   
+   * #swagger.responses[400] = {
+      schema: {
+        "status": false,
+        "message": "欄位未填寫正確"
+      }
+    }
+   */
+)
 
 module.exports = router

@@ -1,0 +1,2399 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Express fitness API",
+    "description": "線上健身平台 API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization",
+      "description": "請在標頭中傳遞 Bearer Token。範例: Bearer <your-token-here>"
+    }
+  },
+  "paths": {
+    "/api/credit-package/": {
+      "get": {
+        "tags": [
+          "CreditPackage"
+        ],
+        "description": "取得購買方案列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "d66c88db-38df-4d6a-9d69-acb16dacf989"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "7堂組合包方案"
+                      },
+                      "credit_amount": {
+                        "type": "number",
+                        "example": 7
+                      },
+                      "price": {
+                        "type": "string",
+                        "example": "1400.00"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CreditPackage"
+        ],
+        "description": "新增購買方案",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "7堂組合包方案"
+                },
+                "credit_amount": {
+                  "type": "number",
+                  "example": 7
+                },
+                "price": {
+                  "type": "number",
+                  "example": 1400
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "d66c88db-38df-4d6a-9d69-acb16dacf989"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "7堂組合包方案"
+                      },
+                      "credit_amount": {
+                        "type": "number",
+                        "example": 7
+                      },
+                      "price": {
+                        "type": "string",
+                        "example": "1400.00"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          },
+          "409": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "資料重複"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/credit-package/{creditPackageId}": {
+      "post": {
+        "tags": [
+          "CreditPackage"
+        ],
+        "description": "使用者購買方案",
+        "parameters": [
+          {
+            "name": "creditPackageId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {}
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ID錯誤"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "CreditPackage"
+        ],
+        "description": "刪除購買方案",
+        "parameters": [
+          {
+            "name": "creditPackageId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ID錯誤"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/coaches/skill/": {
+      "get": {
+        "tags": [
+          "Skill"
+        ],
+        "description": "取得教練專長列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "f1b26209-ce52-4cd9-8d45-fbb7448d90dc"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "瑜珈"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "description": "新增教練專長",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "瑜珈"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "瑜珈"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "f1b26209-ce52-4cd9-8d45-fbb7448d90dc"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2025-01-01T00:00:000Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          },
+          "409": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "資料重複"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/coaches/skill/{creditPackageId}": {
+      "delete": {
+        "tags": [
+          "Skill"
+        ],
+        "description": "刪除教練專長",
+        "parameters": [
+          {
+            "name": "creditPackageId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ID錯誤"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/coaches/": {
+      "get": {
+        "tags": [
+          "Coaches"
+        ],
+        "description": "取得教練列表",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "number",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "per": {
+                  "type": "number",
+                  "example": 10
+                }
+              }
+            },
+            "description": "每頁筆數"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "number",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            },
+            "description": "目前分頁"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "test"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/coaches/{coachId}": {
+      "get": {
+        "tags": [
+          "Coaches"
+        ],
+        "description": "取得教練詳細資訊",
+        "parameters": [
+          {
+            "name": "coachId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "COACH"
+                        }
+                      }
+                    },
+                    "coach": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "340f5553-a158-4846-94d1-2915eee12ec4"
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "example": "b46fb7c5-9116-4275-a2ff-a77ee78f2c63"
+                        },
+                        "experience_years": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "瑜伽教練"
+                        },
+                        "profile_image_url": {
+                          "type": "string",
+                          "example": "https://..."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/coaches/{coachId}/courses": {
+      "get": {
+        "tags": [
+          "Coaches"
+        ],
+        "description": "取得指定教練課程列表",
+        "parameters": [
+          {
+            "name": "coachId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "afd5cdd3-8454-4e1e-80e4-e3d121bc3c63"
+                    },
+                    "coach_name": {
+                      "type": "string",
+                      "example": "test"
+                    },
+                    "skill_name": {
+                      "type": "string",
+                      "example": "瑜珈"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "瑜伽課程"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "瑜伽課程介紹"
+                    },
+                    "start_at": {
+                      "type": "string",
+                      "example": "2025-01-01T00:00:000Z"
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "example": "2025-01-01T00:00:000Z"
+                    },
+                    "max_participants": {
+                      "type": "number",
+                      "example": 10
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/users/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "註冊使用者",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "測試使用者"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "test123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "f1b26209-ce52-4cd9-8d45-fbb7448d90dc"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "測試使用者"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          },
+          "409": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Email已被使用"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "登入會員",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "test@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "test123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "woiewnoiue120380efhkjds1ij..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "測試使用者"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/users/password": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "使用者更新密碼",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "hexSchool12345"
+                },
+                "new_password": {
+                  "type": "string",
+                  "example": "hexsShool666"
+                },
+                "confirm_new_password": {
+                  "type": "string",
+                  "example": "hexSchool666"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {}
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/profile": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得個人資料",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "test@example.com"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "測試使用者"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "更新個人資料",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "新暱稱"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "新暱稱"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/credit-package": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得使用者已購買的方案列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "purchased_credits": {
+                        "type": "number",
+                        "example": 7
+                      },
+                      "price_paid": {
+                        "type": "number",
+                        "example": 1400
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "14堂組合包方案"
+                      },
+                      "purchase_at": {
+                        "type": "string",
+                        "example": "2025-01-01T00:00:000Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/courses": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "取得已預約的課程列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "credit_usage": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "credit_remain": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "course_booking": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "瑜伽班"
+                          },
+                          "course_id": {
+                            "type": "string",
+                            "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                          },
+                          "coach_name": {
+                            "type": "string",
+                            "example": "測試教練"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "pending"
+                          },
+                          "start_at": {
+                            "type": "string",
+                            "example": "2024-12-31T16:00:00Z"
+                          },
+                          "end_at": {
+                            "type": "string",
+                            "example": "2024-12-31T18:00:00Z"
+                          },
+                          "meeting_url": {
+                            "type": "string",
+                            "example": "https://..."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/coaches/": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "取得教練自己的詳細資料",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                    },
+                    "experience_years": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "瑜伽教練"
+                    },
+                    "profile_image_url": {
+                      "type": "string",
+                      "example": "https://..."
+                    },
+                    "skill_ids": {
+                      "type": "array",
+                      "example": [
+                        "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "false"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "變更教練資料",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "experience_years": {
+                  "type": "number",
+                  "example": 1
+                },
+                "description": {
+                  "type": "string",
+                  "example": "瑜伽教練"
+                },
+                "profile_image_url": {
+                  "type": "string",
+                  "example": "https://..."
+                },
+                "skill_ids": {
+                  "type": "array",
+                  "example": [
+                    "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "image_url": {
+                      "type": "string",
+                      "example": "https://..."
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/coaches/courses": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "取得教練自己的課程列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "報名中"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "瑜伽課程"
+                      },
+                      "start_at": {
+                        "type": "string",
+                        "example": "2025-01-01 16:00:00"
+                      },
+                      "end_at": {
+                        "type": "string",
+                        "example": "2025-01-01 18:00:00"
+                      },
+                      "max_participants": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "participants": {
+                        "type": "number",
+                        "example": 5
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "請先登入"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "新增教練課程資料",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                },
+                "skill_id": {
+                  "type": "string",
+                  "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "瑜伽課程"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "瑜伽課程介紹"
+                },
+                "start_at": {
+                  "type": "string",
+                  "example": "2025-01-01 16:00:00"
+                },
+                "end_at": {
+                  "type": "string",
+                  "example": "2025-01-01 18:00:00"
+                },
+                "max_participants": {
+                  "type": "number",
+                  "example": 10
+                },
+                "meeting_url": {
+                  "type": "string",
+                  "example": "https://...."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "course": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "skill_id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "瑜伽課程"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "瑜伽課程介紹"
+                        },
+                        "start_at": {
+                          "type": "string",
+                          "example": "2025-01-01 16:00:00"
+                        },
+                        "end_at": {
+                          "type": "string",
+                          "example": "2025-01-01 18:00:00"
+                        },
+                        "max_participants": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "meeting_url": {
+                          "type": "string",
+                          "example": "https://...."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/coaches/courses/{courseId}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "取得教練自己的課程詳細資料",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                    },
+                    "skill_name": {
+                      "type": "string",
+                      "example": "瑜珈"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "瑜伽課程"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "瑜伽課程介紹"
+                    },
+                    "start_at": {
+                      "type": "string",
+                      "example": "2025-01-01 16:00:00"
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "example": "2025-01-01 18:00:00"
+                    },
+                    "max_participants": {
+                      "type": "number",
+                      "example": 10
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "編輯教練課程資料",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "skill_id": {
+                  "type": "string",
+                  "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "瑜伽課程"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "瑜伽課程介紹"
+                },
+                "start_at": {
+                  "type": "string",
+                  "example": "2025-01-01 16:00:00"
+                },
+                "end_at": {
+                  "type": "string",
+                  "example": "2025-01-01 18:00:00"
+                },
+                "max_participants": {
+                  "type": "number",
+                  "example": 10
+                },
+                "meeting_url": {
+                  "type": "string",
+                  "example": "https://...."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "course": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "skill_id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "瑜伽課程"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "瑜伽課程介紹"
+                        },
+                        "start_at": {
+                          "type": "string",
+                          "example": "2025-01-01 16:00:00"
+                        },
+                        "end_at": {
+                          "type": "string",
+                          "example": "2025-01-01 18:00:00"
+                        },
+                        "max_participants": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "meeting_url": {
+                          "type": "string",
+                          "example": "https://...."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2025-01-02T00:00:000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/coaches/revenue": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "取得教練自己的月營收資料",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "month": {
+                  "type": "string",
+                  "example": "january"
+                }
+              }
+            },
+            "description": "需為全小寫月份名稱"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "object",
+                      "properties": {
+                        "participants": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "revenue": {
+                          "type": "number",
+                          "example": 10000
+                        },
+                        "course_count": {
+                          "type": "number",
+                          "example": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/coaches/{userId}": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "將使用者新增為教練",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "experience_years": {
+                  "type": "number",
+                  "example": 1
+                },
+                "description": {
+                  "type": "string",
+                  "example": "瑜伽教練"
+                },
+                "profile_image_url": {
+                  "type": "string",
+                  "example": "https://..."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "COACH"
+                        }
+                      }
+                    },
+                    "coach": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "1c8da31a-5fd2-44f3-897e-4a259e7ec62b"
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "example": "51feb472-a9b8-4365-b9a5-79b9594315a6"
+                        },
+                        "experience_years": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "瑜伽教練"
+                        },
+                        "profile_image_url": {
+                          "type": "string",
+                          "example": "https://..."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2025-01-01T00:00:000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          },
+          "409": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "使用者已經是教練"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/courses/": {
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "取得課程列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "42a39cce-8f63-4a24-8ea3-d1f8ecdfc35b"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "瑜伽課程"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "瑜伽課程介紹"
+                      },
+                      "start_at": {
+                        "type": "string",
+                        "example": "2025-01-01T00:00:000Z"
+                      },
+                      "end_at": {
+                        "type": "string",
+                        "example": "2025-01-01T00:00:000Z"
+                      },
+                      "max_participants": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "coach_name": {
+                        "type": "string",
+                        "example": "test"
+                      },
+                      "skill_name": {
+                        "type": "string",
+                        "example": "瑜珈"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/courses/{courseId}": {
+      "post": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "報名課程",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {}
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "取消課程",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {}
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/upload/": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "description": "上傳圖片至 Cloudinary",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "上傳的圖片檔案"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "image_url": {
+                      "type": "string",
+                      "example": "https://..."
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "欄位未填寫正確"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "schema": [
+    "http",
+    "https"
+  ]
+}
