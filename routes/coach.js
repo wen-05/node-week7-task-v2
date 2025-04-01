@@ -69,7 +69,7 @@ router.get('/:coachId', handleErrorAsync(coachController.getDetail)
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -98,7 +98,7 @@ router.get('/:coachId/courses', handleErrorAsync(coachController.getCourses)
 
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "欄位未填寫正確"
       }
     }

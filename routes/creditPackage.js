@@ -64,14 +64,14 @@ router.post('/', handleErrorAsync(creditPackageController.createCreditPackage)
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
 
    * #swagger.responses[409] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "資料重複"
       }
     }
@@ -93,7 +93,7 @@ router.post('/:creditPackageId', isAuth, handleErrorAsync(creditPackageControlle
 
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "ID錯誤"
       }
     }
@@ -112,7 +112,7 @@ router.delete('/:creditPackageId', handleErrorAsync(creditPackageController.dele
       
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "ID錯誤"
       }
     }

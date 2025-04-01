@@ -68,7 +68,7 @@ router.put('/', isAuth, isCoach, handleErrorAsync(adminController.editCoachInfor
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -98,7 +98,7 @@ router.get('/courses', isAuth, isCoach, handleErrorAsync(adminController.getCour
 
    * #swagger.responses[401] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "請先登入"
       }
     }
@@ -126,7 +126,7 @@ router.get('/courses/:courseId', isAuth, isCoach, handleErrorAsync(adminControll
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -175,7 +175,7 @@ router.post('/courses', isAuth, isCoach, handleErrorAsync(adminController.create
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -223,7 +223,7 @@ router.put('/courses/:courseId', isAuth, isCoach, handleErrorAsync(adminControll
 
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "欄位未填寫正確",
       }
     }
@@ -259,7 +259,7 @@ router.get('/revenue', isAuth, isCoach, handleErrorAsync(adminController.getCoac
 
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "欄位未填寫正確",
       }
     }
@@ -303,14 +303,14 @@ router.post('/:userId', isAuth, handleErrorAsync(adminController.editRole)
 
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "欄位未填寫正確"
       }
     }
 
    * #swagger.responses[409] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "使用者已經是教練"
       }
     }

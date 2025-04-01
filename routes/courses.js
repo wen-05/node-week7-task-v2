@@ -54,7 +54,7 @@ router.post('/:courseId', isAuth, handleErrorAsync(coursesController.enrollCours
   
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -76,7 +76,7 @@ router.delete('/:courseId', isAuth, handleErrorAsync(coursesController.cancelCou
    
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }

@@ -38,7 +38,7 @@ router.post('/', isAuth, handleErrorAsync(uploadController.postUploadImage)
    
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }

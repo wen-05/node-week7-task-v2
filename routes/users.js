@@ -40,14 +40,14 @@ router.post('/signup', handleErrorAsync(userController.signup, '建立使用者�
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確",
       }
     }
 
    * #swagger.responses[409] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "Email已被使用"
       }
     }
@@ -81,7 +81,7 @@ router.post('/login', handleErrorAsync(userController.login, '登入錯誤:')
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -113,7 +113,7 @@ router.put('/password', isAuth, handleErrorAsync(userController.forgetPassword)
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -140,7 +140,7 @@ router.get('/profile', isAuth, handleErrorAsync(userController.getProfile, '取�
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }
@@ -174,7 +174,7 @@ router.put('/profile', isAuth, handleErrorAsync(userController.editProfile, '更
 
    * #swagger.responses[400] = {
       schema: {
-        "status": false,
+        "status": "failed",
         "message": "欄位未填寫正確"
       }
     }

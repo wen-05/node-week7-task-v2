@@ -47,14 +47,14 @@ router.post('/', handleErrorAsync(skillController.createSkill)
 
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "欄位未填寫正確"
       }
     }
 
    * #swagger.responses[409] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "資料重複"
       }
     }
@@ -73,7 +73,7 @@ router.delete('/:creditPackageId', handleErrorAsync(skillController.deleteSkill)
       
    * #swagger.responses[400] = {
       schema: {
-          "status": false,
+          "status": "failed",
           "message": "ID錯誤"
       }
     }
