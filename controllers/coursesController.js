@@ -5,6 +5,16 @@ const appError = require('../utils/appError')
 
 const { IsNull } = require('typeorm')
 
+// 錯誤訊息管理
+const ERROR_MESSAGES = {
+  ID_ERROR: "ID錯誤",
+  ALREADY_REGISTERED: "已經報名過此課程",
+  NO_CREDITS: "已無可使用堂數",
+  MAX_PARTICIPANTS_REACHED: "已達最大參加人數，無法參加",
+  CANCEL_FAILED: "取消失敗",
+  COURSE_NOT_FOUND: "課程不存在"
+ }
+
 const getCourses = async (req, res, next) => {
   const courses = await dataSource.getRepository('Course').find({
     select: {
@@ -48,7 +58,7 @@ const enrollCourse = async (req, res, next) => {
   const courseRepo = dataSource.getRepository('Course')
   const course = await courseRepo.findOneBy({ id: courseId })
   if (!course) {
-    next(appError(400, "ID錯誤"))
+    next(appError(400, ERROR_MESSAGES.ID_ERROR))
     return
   }
 
@@ -63,7 +73,7 @@ const enrollCourse = async (req, res, next) => {
   })
 
   if (userCourseBooking) {
-    next(appError(400, "已經報名過此課程"))
+    next(appError(400, ERROR_MESSAGES.ALREADY_REGISTERED))
     return
   }
 
@@ -86,10 +96,10 @@ const enrollCourse = async (req, res, next) => {
   })
 
   if (userUsedCredit >= userCredit) {
-    next(appError(400, "已無可使用堂數"))
+    next(appError(400, ERROR_MESSAGES.NO_CREDITS))
     return
   } else if (courseBookingCount >= course.max_participants) {
-    next(appError(400, "已達最大參加人數，無法參加"))
+    next(appError(400, ERROR_MESSAGES.MAX_PARTICIPANTS_REACHED))
     return
   }
 
@@ -116,7 +126,7 @@ const cancelCourse = async (req, res, next) => {
   })
 
   if (!userCourseBooking) {
-    next(appError(400, "ID錯誤"))
+    next(appError(400, ERROR_MESSAGES.ID_ERROR))
     return
   }
 
@@ -132,7 +142,7 @@ const cancelCourse = async (req, res, next) => {
   )
 
   if (updateResult.affected === 0) {
-    next(appError(400, "取消失敗"))
+    next(appError(400, ERROR_MESSAGES.CANCEL_FAILED))
     return
   }
 
