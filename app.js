@@ -12,7 +12,7 @@ const indexRouter = require('./routes/index')
 
 const app = express()
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: '10kb' }))  // 預防惡意用戶傳送過大的 JSON 導致系統異常
 app.use(express.urlencoded({ extended: false }))
 app.use(pinoHttp({
   logger,
@@ -36,11 +36,7 @@ app.use('/api', indexRouter)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerFile))
 
 app.use((req, res, next) => {
-  res.status(404).json({
-    status: 'error',
-    message: "無此路由",
-  })
-  return
+  next({ status: 404, message: '無此路由資訊' })
 });
 
 // eslint-disable-next-line no-unused-vars

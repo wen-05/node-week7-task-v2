@@ -1,9 +1,10 @@
 const { dataSource } = require('../db/data-source')
 const logger = require('../utils/logger')('Admin')
 const { isUndefined, isNotValidString, isNotValidInteger, isNotValidUUID } = require('../utils/valid')
+const validationFields = require('../utils/validationFields')
 const { handleSuccess } = require('../utils/sendResponse')
 const appError = require('../utils/appError')
-const { IsNull, In, Between } = require('typeorm')
+const { IsNull } = require('typeorm')
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -223,12 +224,11 @@ const createCourse = async (req, res, next) => {
     meeting_url: meetingUrl
   } = req.body
 
-  if (isUndefined(userId) || isNotValidString(userId) || !isNotValidUUID(userId) ||
-    isUndefined(skillId) || isNotValidString(skillId) || !isNotValidUUID(skillId) ||
-    isUndefined(name) || isNotValidString(name) ||
-    isUndefined(description) || isNotValidString(description) ||
-    isUndefined(startAt) || isNotValidString(startAt) ||
-    isUndefined(endAt) || isNotValidString(endAt) ||
+  const validationError = validationFields({ userId, skillId, name, description, startAt, endAt })
+
+  if (validationError) return next(appError(400, validationError))
+
+  if (!isNotValidUUID(userId) || !isNotValidUUID(skillId) ||
     isUndefined(maxParticipants) || isNotValidInteger(maxParticipants) ||
     isUndefined(meetingUrl) || isNotValidString(meetingUrl) || !meetingUrl.startsWith('https')) {
 

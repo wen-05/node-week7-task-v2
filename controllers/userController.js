@@ -9,7 +9,7 @@ const config = require('../config/index')
 const generateJWT = require('../utils/generateJWT')
 const { IsNull } = require('typeorm')
 
-const saltRounds = 10
+const saltRounds = process.env.SALT_ROUNDS || 10
 
 const signup = async (req, res, next) => {
   const { name, email, password } = req.body
