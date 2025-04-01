@@ -55,7 +55,11 @@ const getCourse = async (req, res, next) => {
       courseStatus = '已結束'
     }
 
-    const participants = await courseBookingRepo.count({ course_id: item.id, cancelledAt: IsNull() })
+    const participants = await courseBookingRepo.count({
+      where: {
+        course_id: item.id, cancelledAt: IsNull()
+      }
+    })
 
     return {
       id: item.id,
@@ -445,7 +449,7 @@ const editCoachInformation = async (req, res, next) => {
   logger.info(`insert: ${JSON.stringify(insert, null, 1)}`)
 
   const result = await dataSource.getRepository('Coach').findOne({
-    select: ['experience_years', 'description', 'profile_image_url'],
+    select: ['id', 'experience_years', 'description', 'profile_image_url'],
     where: { id: findCoach.id },
     relations: ['CoachLinkSkill']
   })

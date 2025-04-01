@@ -237,7 +237,11 @@ const getEnrollCourse = async (req, res, next) => {
   const userCreditPurchase = await creditPurchaseRepo.sum('purchased_credits', { user_id: id })
 
   // 已使用堂數
-  const credit_usage = await courseBookingRepo.count({ user_id: id, cancelledAt: IsNull() })
+  const credit_usage = await courseBookingRepo.count({
+    where: {
+      user_id: id, cancelledAt: IsNull()
+    }
+  })
 
   // 剩餘堂數
   const credit_remain = userCreditPurchase - credit_usage
