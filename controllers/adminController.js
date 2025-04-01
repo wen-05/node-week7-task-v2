@@ -287,14 +287,14 @@ const editCourse = async (req, res, next) => {
     meeting_url: meetingUrl
   } = req.body
 
+  const validationError = validationFields({ skillId, name, description, startAt, endAt, meetingUrl })
+
+  if (validationError) return next(appError(400, validationError))
+
   if (isNotValidString(courseId) || !isNotValidUUID(courseId) ||
-    isUndefined(skillId) || isNotValidString(skillId) || !isNotValidUUID(skillId) ||
-    isUndefined(name) || isNotValidString(name) ||
-    isUndefined(description) || isNotValidString(description) ||
-    isUndefined(startAt) || isNotValidString(startAt) ||
-    isUndefined(endAt) || isNotValidString(endAt) ||
+    !isNotValidUUID(skillId) ||
     isUndefined(maxParticipants) || isNotValidInteger(maxParticipants) ||
-    isUndefined(meetingUrl) || isNotValidString(meetingUrl) || !meetingUrl.startsWith('https')) {
+    !meetingUrl.startsWith('https')) {
 
     logger.warn('欄位未填寫正確')
     next(appError(400, '欄位未填寫正確'))
@@ -371,29 +371,37 @@ const editRole = async (req, res, next) => {
     return
   }
 
-  const coachRepo = dataSource.getRepository('Coach')
-  const newCoach = coachRepo.create({
-    user_id: userId,
-    experience_years: experienceYears,
-    description,
-    profile_image_url: profileImageUrl
+  // 使用事務來包裝整個過程
+  await dataSource.transaction(async transactionalEntityManager => {
+    // 更新使用者角色為教練
+    const updatedUser = await transactionalEntityManager.update('User', { id: userId }, { role: 'COACH' })
+    if (updatedUser.affected === 0) {
+      logger.warn('更新使用者失敗')
+      throw new Error('更新使用者失敗')  // 這會觸發事務回滾
+    }
+
+    // 建立新的教練資料
+    const coachRepo = dataSource.getRepository('Coach')
+    const newCoach = coachRepo.create({
+      user_id: userId,
+      experience_years: experienceYears,
+      description,
+      profile_image_url: profileImageUrl
+    })
+
+    const savedCoach = await transactionalEntityManager.save('Coach', newCoach)
+    if (!savedCoach) {
+      logger.warn('保存教練資料失敗')
+      throw new Error('保存教練資料失敗')  // 這會觸發事務回滾
+    }
+
+    const savedUser = await userRepository.findOne({
+      select: ['name', 'role'],
+      where: { id: userId }
+    })
+
+    handleSuccess(res, 201, { user: savedUser, coach: savedCoach })
   })
-
-  const updatedUser = await userRepository.update({ id: userId }, { role: 'COACH' })
-
-  if (updatedUser.affected === 0) {
-    logger.warn('更新使用者失敗')
-    next(appError(400, '更新使用者失敗'))
-    return
-  }
-
-  const savedCoach = await coachRepo.save(newCoach)
-  const savedUser = await userRepository.findOne({
-    select: ['name', 'role'],
-    where: { id: userId }
-  })
-
-  handleSuccess(res, 201, { user: savedUser, coach: savedCoach })
 }
 
 const editCoachInformation = async (req, res, next) => {
