@@ -12,7 +12,7 @@ const doc = {
       type: 'apiKey',
       in: 'header',
       name: 'authorization',
-      description: '請在標頭中傳遞 Bearer Token。範例: Bearer <your-token-here>'
+      description: '請在 Value 中填入 Token'
     }
   }
 };

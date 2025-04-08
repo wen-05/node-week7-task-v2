@@ -8,6 +8,18 @@ const logger = require('./utils/logger')('App')
 const swaggerUI = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
 
+const options = {
+  swaggerOptions: {
+    // 使用 requestInterceptor(攔截器) 修改 Authorization 標頭
+    requestInterceptor: function (req) {
+      if (req.headers.authorization && !req.headers.authorization.startsWith('Bearer ')) {
+        req.headers.authorization = 'Bearer ' + req.headers.authorization;
+      }
+      return req;
+    },
+  },
+}
+
 const indexRouter = require('./routes/index')
 
 const app = express()
@@ -33,7 +45,8 @@ app.get('/healthcheck', (req, res) => {
 
 app.use('/api', indexRouter)
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerFile))
+// 修改 swagger-ui-express 的設置
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerFile, options))
 
 app.use((req, res, next) => {
   next({ status: 404, message: '無此路由資訊' })
